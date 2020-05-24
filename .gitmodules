@@ -1,4 +1,4 @@
 [submodule "cigraph"]
 	path = cigraph
-	url = https://github.com/igraph/igraph.git
-	branch = cran
+	url = https://github.com/jmonlong/igraph.git
+	branch = master

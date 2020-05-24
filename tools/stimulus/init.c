@@ -86,7 +86,7 @@ extern SEXP R_igraph_community_fastgreedy(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_igraph_community_infomap(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_igraph_community_label_propagation(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_igraph_community_leading_eigenvector(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-extern SEXP R_igraph_community_multilevel(SEXP, SEXP);
+extern SEXP R_igraph_community_multilevel(SEXP, SEXP, SEXP);
 extern SEXP R_igraph_community_optimal_modularity(SEXP, SEXP);
 extern SEXP R_igraph_community_to_membership2(SEXP, SEXP, SEXP);
 extern SEXP R_igraph_compare_communities(SEXP, SEXP, SEXP);
@@ -265,7 +265,7 @@ extern SEXP R_igraph_mincut_value(SEXP, SEXP);
 extern SEXP R_igraph_minimum_size_separators(SEXP);
 extern SEXP R_igraph_minimum_spanning_tree_prim(SEXP, SEXP);
 extern SEXP R_igraph_minimum_spanning_tree_unweighted(SEXP);
-extern SEXP R_igraph_modularity(SEXP, SEXP, SEXP);
+extern SEXP R_igraph_modularity(SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_igraph_modularity_matrix(SEXP, SEXP);
 extern SEXP R_igraph_motifs_randesu(SEXP, SEXP, SEXP);
 extern SEXP R_igraph_motifs_randesu_estimate(SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -448,7 +448,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_igraph_community_infomap",                          (DL_FUNC) &R_igraph_community_infomap,                           4},
     {"R_igraph_community_label_propagation",                (DL_FUNC) &R_igraph_community_label_propagation,                 4},
     {"R_igraph_community_leading_eigenvector",              (DL_FUNC) &R_igraph_community_leading_eigenvector,               9},
-    {"R_igraph_community_multilevel",                       (DL_FUNC) &R_igraph_community_multilevel,                        2},
+    {"R_igraph_community_multilevel",                       (DL_FUNC) &R_igraph_community_multilevel,                        3},
     {"R_igraph_community_optimal_modularity",               (DL_FUNC) &R_igraph_community_optimal_modularity,                2},
     {"R_igraph_community_to_membership2",                   (DL_FUNC) &R_igraph_community_to_membership2,                    3},
     {"R_igraph_compare_communities",                        (DL_FUNC) &R_igraph_compare_communities,                         3},
@@ -627,7 +627,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_igraph_minimum_size_separators",                    (DL_FUNC) &R_igraph_minimum_size_separators,                     1},
     {"R_igraph_minimum_spanning_tree_prim",                 (DL_FUNC) &R_igraph_minimum_spanning_tree_prim,                  2},
     {"R_igraph_minimum_spanning_tree_unweighted",           (DL_FUNC) &R_igraph_minimum_spanning_tree_unweighted,            1},
-    {"R_igraph_modularity",                                 (DL_FUNC) &R_igraph_modularity,                                  3},
+    {"R_igraph_modularity",                                 (DL_FUNC) &R_igraph_modularity,                                  4},
     {"R_igraph_modularity_matrix",                          (DL_FUNC) &R_igraph_modularity_matrix,                           2},
     {"R_igraph_motifs_randesu",                             (DL_FUNC) &R_igraph_motifs_randesu,                              3},
     {"R_igraph_motifs_randesu_estimate",                    (DL_FUNC) &R_igraph_motifs_randesu_estimate,                     5},

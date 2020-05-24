@@ -394,11 +394,13 @@ modularity <- function(x, ...)
 #' @param membership Numeric vector, one value for each vertex, the membership
 #' vector of the community structure.
 #' @param weights If not \code{NULL} then a numeric vector giving edge weights.
+#' @param gamma Resolution parameter. Must be >=0. Default is 1. <1 favors less
+#' communities (larger in size); >1 more communities (smaller in size).
 #' @param \dots Additional arguments, none currently.
 #' @return For \code{modularity} a numeric scalar, the modularity score of the
 #' given configuration.
 #' 
-#' For \code{modularity_matrix} a numeic square matrix, its order is the number of
+#' For \code{modularity_matrix} a numeric square matrix, its order is the number of
 #' vertices in the graph.
 #' @author Gabor Csardi \email{csardi.gabor@@gmail.com}
 #' @seealso \code{\link{cluster_walktrap}},
@@ -419,7 +421,7 @@ modularity <- function(x, ...)
 #' modularity(g, membership(wtc))
 #' 
 
-modularity.igraph <- function(x, membership, weights=NULL, ...) {
+modularity.igraph <- function(x, membership, weights=NULL, gamma=1, ...) {
   # Argument checks
   if (!is_igraph(x)) { stop("Not a graph object") }
   membership <- as.numeric(membership)
@@ -427,7 +429,7 @@ modularity.igraph <- function(x, membership, weights=NULL, ...) {
 
   on.exit( .Call(C_R_igraph_finalizer) )
   # Function call
-  res <- .Call(C_R_igraph_modularity, x, membership-1, weights)
+  res <- .Call(C_R_igraph_modularity, x, membership-1, weights, gamma)
   res
 }
 
@@ -1470,6 +1472,8 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' \code{weight} edge attribute, then this is used by default. Supply \code{NA}
 #' here if the graph has a \code{weight} edge attribute, but you want to ignore
 #' it. Larger edge weights correspond to stronger connections.
+#' @param gamma Resolution parameter. Must be >=0. Default is 1. <1 leads to less
+#' communities (larger in size); >1 more communities (smaller in size).
 #' @return \code{cluster_louvain} returns a \code{\link{communities}}
 #' object, please see the \code{\link{communities}} manual page for details.
 #' @author Tom Gregorovic, Tamas Nepusz \email{ntamas@@gmail.com}
@@ -1494,7 +1498,7 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' g <- add_edges(g, c(1,6, 1,11, 6, 11))
 #' cluster_louvain(g)
 #' 
-cluster_louvain <- function(graph, weights=NULL) {
+cluster_louvain <- function(graph, weights=NULL, gamma=1) {
   # Argument checks
   if (!is_igraph(graph)) { stop("Not a graph object") }
   if (is.null(weights) && "weight" %in% edge_attr_names(graph)) { 
@@ -1508,7 +1512,7 @@ cluster_louvain <- function(graph, weights=NULL) {
 
   on.exit( .Call(C_R_igraph_finalizer) )
   # Function call
-  res <- .Call(C_R_igraph_community_multilevel, graph, weights)
+  res <- .Call(C_R_igraph_community_multilevel, graph, weights, gamma)
   if (igraph_opt("add.vertex.names") && is_named(graph)) {
     res$names <- V(graph)$name
   }
