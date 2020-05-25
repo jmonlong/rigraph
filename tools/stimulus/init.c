@@ -266,7 +266,7 @@ extern SEXP R_igraph_minimum_size_separators(SEXP);
 extern SEXP R_igraph_minimum_spanning_tree_prim(SEXP, SEXP);
 extern SEXP R_igraph_minimum_spanning_tree_unweighted(SEXP);
 extern SEXP R_igraph_modularity(SEXP, SEXP, SEXP, SEXP);
-extern SEXP R_igraph_modularity_matrix(SEXP, SEXP);
+extern SEXP R_igraph_modularity_matrix(SEXP, SEXP, SEXP);
 extern SEXP R_igraph_motifs_randesu(SEXP, SEXP, SEXP);
 extern SEXP R_igraph_motifs_randesu_estimate(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP R_igraph_motifs_randesu_no(SEXP, SEXP, SEXP);
@@ -628,7 +628,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"R_igraph_minimum_spanning_tree_prim",                 (DL_FUNC) &R_igraph_minimum_spanning_tree_prim,                  2},
     {"R_igraph_minimum_spanning_tree_unweighted",           (DL_FUNC) &R_igraph_minimum_spanning_tree_unweighted,            1},
     {"R_igraph_modularity",                                 (DL_FUNC) &R_igraph_modularity,                                  4},
-    {"R_igraph_modularity_matrix",                          (DL_FUNC) &R_igraph_modularity_matrix,                           2},
+    {"R_igraph_modularity_matrix",                          (DL_FUNC) &R_igraph_modularity_matrix,                           3},
     {"R_igraph_motifs_randesu",                             (DL_FUNC) &R_igraph_motifs_randesu,                              3},
     {"R_igraph_motifs_randesu_estimate",                    (DL_FUNC) &R_igraph_motifs_randesu_estimate,                     5},
     {"R_igraph_motifs_randesu_no",                          (DL_FUNC) &R_igraph_motifs_randesu_no,                           3},
