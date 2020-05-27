@@ -394,7 +394,7 @@ modularity <- function(x, ...)
 #' @param membership Numeric vector, one value for each vertex, the membership
 #' vector of the community structure.
 #' @param weights If not \code{NULL} then a numeric vector giving edge weights.
-#' @param resolution.parameter Resolution parameter. Must be greater than or equal to 0.
+#' @param resolution Resolution parameter. Must be greater than or equal to 0.
 #' Set it to 1 to use the classical definition of modularity.
 #' @param \dots Additional arguments, none currently.
 #' @return For \code{modularity} a numeric scalar, the modularity score of the
@@ -421,7 +421,7 @@ modularity <- function(x, ...)
 #' modularity(g, membership(wtc))
 #' 
 
-modularity.igraph <- function(x, membership, weights=NULL, resolution.parameter=1, ...) {
+modularity.igraph <- function(x, membership, weights=NULL, resolution=1, ...) {
   # Argument checks
   if (!is_igraph(x)) { stop("Not a graph object") }
   membership <- as.numeric(membership)
@@ -429,7 +429,7 @@ modularity.igraph <- function(x, membership, weights=NULL, resolution.parameter=
 
   on.exit( .Call(C_R_igraph_finalizer) )
   # Function call
-  res <- .Call(C_R_igraph_modularity, x, membership-1, weights, resolution.parameter)
+  res <- .Call(C_R_igraph_modularity, x, membership-1, weights, resolution)
   res
 }
 
@@ -449,7 +449,7 @@ modularity.communities <- function(x, ...) {
 #' @aliases mod.matrix
 #' @export
 
-modularity_matrix <- function(graph, weights=NULL, resolution.parameter=1) {
+modularity_matrix <- function(graph, weights=NULL, resolution=1) {
   # Argument checks
   if (!is_igraph(graph)) { stop("Not a graph object") }
 
@@ -464,7 +464,7 @@ modularity_matrix <- function(graph, weights=NULL, resolution.parameter=1) {
 
   on.exit( .Call(C_R_igraph_finalizer) )
   # Function call
-  res <- .Call(C_R_igraph_modularity_matrix, graph, weights, resolution.parameter)
+  res <- .Call(C_R_igraph_modularity_matrix, graph, weights, resolution)
 
   res
 }
@@ -1472,7 +1472,7 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' \code{weight} edge attribute, then this is used by default. Supply \code{NA}
 #' here if the graph has a \code{weight} edge attribute, but you want to ignore
 #' it. Larger edge weights correspond to stronger connections.
-#' @param resolution.parameter Resolution parameter. Must be greater than or equal
+#' @param resolution Resolution parameter. Must be greater than or equal
 #' to 0. Lower values favor fewer, larger communities; higher values favor more,
 #' smaller communities. Set it to 1 to use the classical definition of modularity.
 #' @return \code{cluster_louvain} returns a \code{\link{communities}}
@@ -1499,7 +1499,7 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' g <- add_edges(g, c(1,6, 1,11, 6, 11))
 #' cluster_louvain(g)
 #' 
-cluster_louvain <- function(graph, weights=NULL, resolution.parameter=1) {
+cluster_louvain <- function(graph, weights=NULL, resolution=1) {
   # Argument checks
   if (!is_igraph(graph)) { stop("Not a graph object") }
   if (is.null(weights) && "weight" %in% edge_attr_names(graph)) { 
@@ -1513,7 +1513,7 @@ cluster_louvain <- function(graph, weights=NULL, resolution.parameter=1) {
 
   on.exit( .Call(C_R_igraph_finalizer) )
   # Function call
-  res <- .Call(C_R_igraph_community_multilevel, graph, weights, resolution.parameter)
+  res <- .Call(C_R_igraph_community_multilevel, graph, weights, resolution)
   if (igraph_opt("add.vertex.names") && is_named(graph)) {
     res$names <- V(graph)$name
   }
