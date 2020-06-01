@@ -367,14 +367,21 @@ modularity <- function(x, ...)
 #' The modularity of a graph with respect to some division (or vertex types)
 #' measures how good the division is, or how separated are the different vertex
 #' types from each other. It defined as \deqn{Q=\frac{1}{2m} \sum_{i,j}
-#' (A_{ij}-\frac{k_ik_j}{2m})\delta(c_i,c_j),}{Q=1/(2m) * sum( (Aij-ki*kj/(2m)
+#' (A_{ij}-gamma*\frac{k_ik_j}{2m})\delta(c_i,c_j),}{Q=1/(2m) * sum( (Aij-gamma*ki*kj/(2m)
 #' ) delta(ci,cj),i,j),} here \eqn{m} is the number of edges, \eqn{A_{ij}}{Aij}
 #' is the element of the \eqn{A} adjacency matrix in row \eqn{i} and column
 #' \eqn{j}, \eqn{k_i}{ki} is the degree of \eqn{i}, \eqn{k_j}{kj} is the degree
 #' of \eqn{j}, \eqn{c_i}{ci} is the type (or component) of \eqn{i},
 #' \eqn{c_j}{cj} that of \eqn{j}, the sum goes over all \eqn{i} and \eqn{j}
 #' pairs of vertices, and \eqn{\delta(x,y)}{delta(x,y)} is 1 if \eqn{x=y} and 0
-#' otherwise.
+#' otherwise. \eqn{gamma} is the resolution parameter.
+#'
+#' The resolution parameter \eqn{gamma} allows weighting the random null model, which
+#' might be useful when finding partitions with a high modularity. Maximizing modularity
+#' with higher values of the resolution parameter typically result in more, smaller clusters
+#' when finding partitions with a high modularity. Lower values typically results in
+#' fewer, larger clusters. The original definition of modularity is retrieved
+#' when setting \code{gamma=1}.
 #' 
 #' If edge weights are given, then these are considered as the element of the
 #' \eqn{A} adjacency matrix, and \eqn{k_i}{ki} is the sum of weights of
@@ -395,7 +402,7 @@ modularity <- function(x, ...)
 #' vector of the community structure.
 #' @param weights If not \code{NULL} then a numeric vector giving edge weights.
 #' @param resolution Resolution parameter. Must be greater than or equal to 0.
-#' Set it to 1 to use the classical definition of modularity.
+#' Set it to 1 (default) to use the classical definition of modularity.
 #' @param \dots Additional arguments, none currently.
 #' @return For \code{modularity} a numeric scalar, the modularity score of the
 #' given configuration.
@@ -1464,6 +1471,13 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' communities. The process stops when there is only a single vertex left or
 #' when the modularity cannot be increased any more in a step.
 #' 
+#' The resolution parameter allows finding communities at different
+#' resolutions. Higher values of the resolution parameter typically result in
+#' more, smaller communities. Lower values typically result in fewer, larger
+#' communities. The original definition of modularity is retrieved when setting
+#' \code{resolution=1}. Note that the returned modularity value is calculated using
+#' the indicated resolution parameter. See \code{\link{modularity}} for more details.
+#' 
 #' This function was contributed by Tom Gregorovic.
 #'
 #' @aliases multilevel.community
@@ -1472,9 +1486,9 @@ cluster_label_prop <- function(graph, weights=NULL, initial=NULL,
 #' \code{weight} edge attribute, then this is used by default. Supply \code{NA}
 #' here if the graph has a \code{weight} edge attribute, but you want to ignore
 #' it. Larger edge weights correspond to stronger connections.
-#' @param resolution Resolution parameter. Must be greater than or equal
-#' to 0. Lower values favor fewer, larger communities; higher values favor more,
-#' smaller communities. Set it to 1 to use the classical definition of modularity.
+#' @param resolution Resolution parameter. Must be greater than or equal to 0.
+#' Lower values favor fewer, larger communities; higher values favor more,
+#' smaller communities. Set it to 1 (default) to use the classical definition of modularity.
 #' @return \code{cluster_louvain} returns a \code{\link{communities}}
 #' object, please see the \code{\link{communities}} manual page for details.
 #' @author Tom Gregorovic, Tamas Nepusz \email{ntamas@@gmail.com}
